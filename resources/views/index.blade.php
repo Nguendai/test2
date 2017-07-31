@@ -11,7 +11,7 @@
 <body>
 <div class="container"  ng-controller="MembersControll">
 		<center><h2>List Member</h2></center>
-		<button id="btn-add" class="btn btn-primary btn-xs" ng-click="modal('add');resetForm()"  >Thêm Sinh Viên</button>
+		<button id="btn-add" class="btn btn-primary btn-xs" ng-click="modal('add');resetForm()"  >Add Members</button>
 		<table class="table table-bordered" id="table_id" class="display">
 			<thead>
 				<tr>
@@ -26,11 +26,11 @@
 			<tbody>
 				<tr ng-repeat="mb in members | orderBy:orderByField:reverseSort">
 
-					<td>{{ mb.id }}</td>
-					<td>{{ mb.name }}</td>
-					<td>{{ mb.age }}</td>
-					<td>{{ mb.address }}</td>
-					<td><img ng-src="upload/images/{{mb.images}}" alt="" width="100px" class="thumbnail"></td>
+					<td>@{{ mb.id }}</td>
+					<td>@{{ mb.name }}</td>
+					<td>@{{ mb.age }}</td>
+					<td>@{{ mb.address }}</td>
+					<td><img ng-src="upload/images/@{{mb.images}}" alt="" width="100px" class="thumbnail"></td>
 					<td>
 						<button class="btn btn-default btn-xs btn-detail" id="btn-edit" ng-click="modal('edit',mb.id)">Edit</button>
 						<button class="btn btn-danger btn-xs btn-delete" ng-click="comfirmDelete(mb.id)">Delete</button>
@@ -45,46 +45,47 @@
 			<div class="modal-content">
 			  <div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title">{{frmTitle}}</h4>
+				<h4 class="modal-title">@{{frmTitle}}</h4>
 			  </div>
 			  <div class="modal-body">
 				<form  name="member"  class="form-horizontal" novalidate>
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-3 control-label">Name</label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control" id="name" name="name" ng-model="membera.name" ng-maxlength="100"  required placeholder="Please,Enter Name" />
-							<span id="helpBlock2" class="help-block" ng-show="member.name.$error.required ">Please,Enter Name</span>
-							<span id="helpBlock2" class="help-block" ng-show="member.name.$error.maxlength ">Name must be less than 100 char</span>
+							<input type="text" class="form-control" id="name" name="name"  ng-model-options="{allowInvalid: true}" ng-model="membera.name" ng-maxlength="100"  required placeholder="Please,Enter Name" />
+							<span id="helpBlock2" class="help-block" ng-show=" member.name.$error.required && member.name.$touched && member.name.$dirty ">Please,Enter Name</span>
+							<span id="helpBlock2" class="help-block" ng-show="member.name.$error.maxlength  ">Name must be less than 100 char</span>
 						</div>
 					</div>
 					<div class="form-group"  >
 						<label for="inputEmail3" class="col-sm-3 control-label">Age</label>
 						<div class="col-sm-9">
-							<input type="number" class="form-control" max="99" id="age" name="age" ng-model="membera.age"  ng-required="true"  placeholder="Please,Enter Age" >
-							<span id="helpBlock2" class="help-block" ng-show="member.age.$error.required "  >Please,Enter Age</span>
-							<span id="helpBlock2" class="help-block" ng-show="member.age.$error.max " >Please,Enter1 Age</span>
+							<input type="number" class="form-control" max="99" id="age" ng-model-options="{allowInvalid: true}" name="age" ng-model="membera.age"  ng-required="true"  placeholder="Please,Enter Age" >
+							<span id="helpBlock2" class="help-block" ng-show="member.age.$error.required && member.name.$touched && member.name.$dirty "  >Please,Enter Age</span>
+							<span id="helpBlock2" class="help-block" ng-show="member.age.$error.max ">Max Age</span>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-3 control-label">Address</label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control" id="address" ng-model="membera.address" ng-maxlength="300"  required name="address" placeholder="Please,Enter Address" />
-							<span id="helpBlock2" class="help-block" ng-show="member.address.$error.required ">Please,Enter Address</span>
+							<input type="text" class="form-control" id="address" ng-model-options="{allowInvalid: true}" ng-model="membera.address" ng-maxlength="300"  required name="address" placeholder="Please,Enter Address" />
+							<span id="helpBlock2" class="help-block" ng-show="member.address.$error.required && member.name.$touched && member.name.$dirty ">Please,Enter Address</span>
 							<span id="helpBlock2" class="help-block" ng-show="member.address.$error.maxlength ">Address must be less than 300 char</span>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-3 control-label">Image</label>
 						<div class="col-sm-9">
-							<input type="file" ng-model="file" id="file" valid-file=".jpeg,.gif,.png" validFile class="form-control" name="file">
+							<input type="file" ng-model="file"  id="file" valid-file  class="form-control" name="file">
 							<span id="helpBlock2" class="help-block" ng-show="member.file.$error.size">Image size 10mb</span>
-							<span id="helpBlock2" class="help-block" ng-show="member.file.$error.extension">NOt Images</span>
+							<span id="helpBlock2" class="help-block" ng-show="member.file.$error.extension">Not Images</span>
 						</div>
 					</div>
 				</form>
 			  </div>
 			  <div class="modal-footer">
-				<button type="button" class="btn btn-primary"  ng-disabled="member.$invalid" ng-click="save(state,membera.id,$event);$event.stopPropagation()">Save</button>
+				<button type="button" class="btn btn-primary"
+				 ng-click="save(state,membera.id)">Save</button>
 			  </div>
 			</div><!-- /.modal-content -->
 		  </div><!-- /.modal-dialog -->

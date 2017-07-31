@@ -1,5 +1,5 @@
-<!doctype html>
-<html lang="{{ config('app.locale') }}">
+<!doctype html >
+<html lang="{{ config('app.locale') }}" ng-app="test-app3">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -64,23 +64,15 @@
             }
         </style>
     </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @if (Auth::check())
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ url('/login') }}">Login</a>
-                        <a href="{{ url('/register') }}">Register</a>
-                    @endif
-                </div>
-            @endif
-
+    <body ng-controller="MembersControll2">
+        
             <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
+                    <form action="">
+                        <input type="text" id='name' ng-maxlength="100"  ng-model-options="{allowInvalid: true}" ng-model="membera.name">
+                        <span id="helpBlock2" class="help-block" ng-show="member.name.$error.maxlength  ">Name must be less than 100 char</span>
+                        <button type="button" class="btn btn-primary"
+                        ng-click="save(state)">Save</button>
+                    </form>
 
                 <div class="links">
                     <a href="https://laravel.com/docs">Documentation</a>
@@ -92,4 +84,12 @@
             </div>
         </div>
     </body>
+    <script type="text/javascript" src="<?php echo 'asset/js/jquery.min.js';?>"></script>
+    <script type="text/javascript" src="<?php echo 'asset/js/bootstrap.min.js';?>"></script>
+    <script type="text/javascript" src="<?php echo 'app/lib/angular.min.js';?>"></script> 
+    <script type="text/javascript" src="<?php echo 'asset/sweetalert/dist/sweetalert.min.js';?>"></script> 
+    <script type="text/javascript" src="<?php echo 'app/app.js';?>"></script>
+    <script type="text/javascript" src="<?php echo 'app/tests.js';?>"></script>
+    <script type="text/javascript" src="<?php echo 'app/validator/fileValidate.js';?>"></script>
+    
 </html>

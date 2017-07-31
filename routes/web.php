@@ -19,3 +19,6 @@ Route::post('add','MembersControll@postAdd');
 Route::get('edit/{id}','MembersControll@getEdit');
 Route::post('edit/{id}','MembersControll@postEdit');
 Route::get('delete/{id}','MembersControll@postDelete');
+Route::get('test/',function(){
+	return view('welcome');
+});

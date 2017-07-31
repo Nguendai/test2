@@ -15,24 +15,34 @@ class ValidateTest extends TestCase
      *
      * @return void
      */
-    public function testExample()
-    {
-        $this->assertTrue(true);
-    }
+
     public function testValidateName(){
     	$data=[
     		'name'=> '12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678911',
     		'address'=>'hanoi',
     		'age'=>'20',
-
     	];
     	$response=$this->call('POST', 'add', $data);
-    	$this->assertDatabaseHas('members', [
+    	$this->assertDatabaseMissing('members', [
             'name' => $data['name'],
             'address' => $data['address'],
             'age' => $data['age'],
         ]);
 
+
+    }
+    public function testValidateName100Char(){
+        $data=[
+            'name'=> '1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890',
+            'address'=>'hanoi',
+            'age'=>'20',
+        ];
+        $response=$this->call('POST', 'add', $data);
+        $this->assertDatabaseHas('members', [
+            'name' => $data['name'],
+            'address' => $data['address'],
+            'age' => $data['age'],
+        ]);
     }
     public function testValidateNameNull(){
         $data=[
@@ -42,22 +52,20 @@ class ValidateTest extends TestCase
 
         ];
         $response=$this->call('POST', 'add', $data);
-        $this->assertDatabaseHas('members', [
+        $this->assertDatabaseMissing('members', [
             'name' => $data['name'],
             'address' => $data['address'],
             'age' => $data['age'],
         ]);
-
     }
     public function testValidateAddressNull(){
         $data=[
             'name'=> 'nguyendai',
             'address'=>'',
             'age'=>'20',
-
         ];
         $response=$this->call('POST', 'add', $data);
-        $this->assertDatabaseHas('members', [
+        $this->assertDatabaseMissing('members', [
             'name' => $data['name'],
             'address' => $data['address'],
             'age' => $data['age'],
@@ -69,11 +77,25 @@ class ValidateTest extends TestCase
     		'name'=> 'nguêndai',
     		'address'=>'123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789111234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567891112345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678911',
     		'age'=>'20',
-    		'images'=>'',
 
     	];
     	$response=$this->call('POST', 'add', $data);
-    	$this->assertDatabaseHas('members', [
+    	$this->assertDatabaseMissing('members', [
+            'name' => $data['name'],
+            'address' => $data['address'],
+            'age' => $data['age']
+        ]);
+
+    }
+    public function testValidateAddress300char(){
+        $data=[
+            'name'=> 'nguêndai',
+            'address'=>'123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890',
+            'age'=>'20',
+
+        ];
+        $response=$this->call('POST', 'add', $data);
+        $this->assertDatabaseHas('members', [
             'name' => $data['name'],
             'address' => $data['address'],
             'age' => $data['age']
@@ -85,6 +107,36 @@ class ValidateTest extends TestCase
             'name'=> 'nguyendai',
             'address'=>'hanoi',
             'age'=>'',
+
+        ];
+        $response=$this->call('POST', 'add', $data);
+        $this->assertDatabaseMissing('members', [
+            'name' => $data['name'],
+            'address' => $data['address'],
+            'age' => $data['age'],
+        ]);
+
+    }
+    public function testValidateAgeLessThan0(){
+        $data=[
+            'name'=> 'nguyendai',
+            'address'=>'hanoi',
+            'age'=>'-10',
+
+        ];
+        $response=$this->call('POST', 'add', $data);
+        $this->assertDatabaseMissing('members', [
+            'name' => $data['name'],
+            'address' => $data['address'],
+            'age' => $data['age'],
+        ]);
+
+    }
+    public function testValidateAgeOneNumber(){
+        $data=[
+            'name'=> 'nguyendai',
+            'address'=>'hanoi',
+            'age'=>'1',
 
         ];
         $response=$this->call('POST', 'add', $data);
@@ -100,14 +152,12 @@ class ValidateTest extends TestCase
     		'name'=> 'nguyendai',
     		'address'=>'hanoi',
     		'age'=>'120',
-    		'images'=>'',
-
     	];
     	$response=$this->call('POST', 'add', $data);
-    	$this->assertDatabaseHas('members', [
+    	$this->assertDatabaseMissing('members', [
             'name' => $data['name'],
             'address' => $data['address'],
-            'age' => $data['age']
+            'age' => $data['age'],
         ]);
 
     }

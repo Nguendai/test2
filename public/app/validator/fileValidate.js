@@ -5,14 +5,13 @@ app.directive('validFile', function () {
     	link: function (scope, el, attrs, ngModel) {
             el.bind('change', function (event) {
                 var file = event.target.files[0];
-                // console.log(file);
+                console.log(file);
                 scope.file = file ? file : null;
                 scope.$apply();
             });
     	ngModel.$validators.size = function () {
-                // console.log(scope.file);
             	if (scope.file) {
-            		if (scope.file.size > 100000) {
+            		if (scope.file.size > 10000000) {
 	            		return false;
 	            	} else {
 	            		return true;

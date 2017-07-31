@@ -26,6 +26,6 @@ $factory->define(App\Members::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
         'address' => $faker->address,
-        'age' => rand(1, 99),
+        'age' => rand(1,2),
     ];
 });

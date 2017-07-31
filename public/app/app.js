@@ -15,15 +15,17 @@ app.controller('MembersControll',function($scope,$http){
 		switch(state) {
 			case "add":
 				$scope.membera={};
-				$('#file').val('');
-				$scope.myFile=null;
+				$('#file').val(null);
+				$scope.file=null;
 				$scope.frmTitle="Add Member";
 				$scope.member.$setPristine(true);
+				// console.log($scope.membera.name);
+
 				break;
 			case "edit" :
 				$scope.membera={};
 				$('#file').val('');
-				$scope.myFile=null;
+				$scope.file=null;
 				$scope.frmTitle="Edit Member";
 				$scope.member.$setPristine(true);
 				$http({
@@ -40,46 +42,40 @@ app.controller('MembersControll',function($scope,$http){
 		$('#myModal').modal('show');
 	}
 	
-	$scope.save= function(state,id,event){
+	$scope.save= function(state,id){
 		if(state=="add"){
-			event.stopPropagation();
+			// event.stopPropagation();
 				var file=document.getElementById('file');
 				var data=new FormData();
+				$scope.membera.age=$scope.membera.age?$scope.membera.age:'';
+				$scope.membera.address=$scope.membera.address?$scope.membera.address:'';
+				$scope.membera.name=$scope.membera.name?$scope.membera.name:'';		
 				data.append('age',$scope.membera.age);
 				data.append('address',$scope.membera.address);
 				data.append('name',$scope.membera.name);
 				data.append('file',file.files[0]);
-				// $scope.member.$invalid==true;
 				$http({
 					method:'POST',
 					data:data,
 					url:'http://localhost/test2/public/add',
 					headers :{'Content-Type':undefined}
 				}).then(function(reponse){
-					// console.log(reponse.data);
-					if(reponse.data=="name"){
-						sweetAlert("Error", "Name Errors", "error");				
-					}else if(reponse.data=="age"){
-						sweetAlert("Error", "Age Errors", "error");
-					}else if(reponse.data=="address"){
-						sweetAlert("Error", "Address Errors", "error");
-					}else if(reponse.data=="errors"){
-						sweetAlert("Error", "Imange Errors", "error");
-					}else{
-						$('#myModal').modal('hide');
-						$scope.members = reponse.data;
-						sweetAlert("Success", "New member was added!", "success");
-					}
+					console.log(reponse.data)
+					$('#myModal').modal('hide');
+					$scope.members = reponse.data;
+					sweetAlert("Success", "New member was added!", "success");
+					
 				},function(error){
-					console.log(error);
-				});
-			// }
+					sweetAlert("Error", error.data.status, "error");
+			});
 		}
-
 		$scope.member.$invalid=true;
 		if(state=="edit"){
 			var file=document.getElementById('file');
 			var data=new FormData();
+			$scope.membera.age=$scope.membera.age?$scope.membera.age:'';
+			$scope.membera.address=$scope.membera.address?$scope.membera.address:'';
+			$scope.membera.name=$scope.membera.name?$scope.membera.name:'';
 			data.append('name',$scope.membera.name);
 			data.append('age',$scope.membera.age);
 			data.append('address',$scope.membera.address);
@@ -90,19 +86,15 @@ app.controller('MembersControll',function($scope,$http){
 				url:'http://localhost/test2/public/edit/'+id,
 				headers :{'Content-Type':undefined}
 			}).then(function(reponse){
-				if(reponse.data=="name"){
-					sweetAlert("Error", "Name Errors", "error");				
-				}else if(reponse.data=="age"){
-					sweetAlert("Error", "Age Errors", "error");
-				}else if(reponse.data=="address"){
-					sweetAlert("Error", "Address Errors", "error");				
-				}else{
-					$('#myModal').modal('hide');
-					$scope.members = reponse.data;
-					sweetAlert("Success", "Member was edited!", "success");
-				}
+				$('#myModal').modal('hide');
+				$scope.members = reponse.data;
+				sweetAlert("Success", "Member was edited!", "success");
 			},function(error){
-				console.log(error);
+				if(error.data.file){
+					sweetAlert("Error",error.data.file,"error");
+				}else{
+					sweetAlert("Error", error.data.name+'\n'+error.data.address+'\n'+error.data.age, "error");
+				}
 			});
 		}
 	}

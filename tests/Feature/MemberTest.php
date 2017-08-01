@@ -32,7 +32,6 @@ class MemberTest extends TestCase
             'age' => $data['age'],
             'address' => $data['address'],
         ]);
-        $response->assertStatus(200);
     }
     public function testEditMember(){
     	$member = factory(\App\Members::class)->create([
@@ -54,7 +53,6 @@ class MemberTest extends TestCase
             'age' => $dataEdit['age'],
 
         ]);
-        $response->assertStatus(200);
     }
     public function testDelete(){
     	$member = factory(\App\Members::class)->create([
@@ -70,7 +68,6 @@ class MemberTest extends TestCase
             'address' => $member->address,
             'age' => $member->age,
         ]);
-        $response->assertStatus(200);
 
     }
 }

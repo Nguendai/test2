@@ -141,7 +141,7 @@ class ValidateEditTest extends TestCase
         ]);
     	$data=[
     		'name'=>"ok",
-    		'age'=>'23',
+    		'age'=>'24',
     		'address'=>'ha noi',
     	];
     	$reponse=$this->call('POST','edit/'.$member->id,$data);

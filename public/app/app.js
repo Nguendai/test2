@@ -20,7 +20,7 @@ app.controller('MembersControll',function($scope,$http){
 				$scope.frmTitle="Add Member";
 				$scope.member.$setPristine(true);
 				// console.log($scope.membera.name);
-
+				$('#myModal').modal('show');
 				break;
 			case "edit" :
 				$scope.membera={};
@@ -33,13 +33,14 @@ app.controller('MembersControll',function($scope,$http){
 					url:'http://52.14.242.205/edit/'+id,
 				}).then(function(reponse){
 					$scope.membera=reponse.data;
+					$('#myModal').modal('show');
 				},function(error){
 					console.log(error);
 				});
 				break;
 			default:
 		}
-		$('#myModal').modal('show');
+		// $('#myModal').modal('show');
 	}
 	
 	$scope.save= function(state,id){
@@ -90,11 +91,8 @@ app.controller('MembersControll',function($scope,$http){
 				$scope.members = reponse.data;
 				sweetAlert("Success", "Member was edited!", "success");
 			},function(error){
-				if(error.data.file){
-					sweetAlert("Error",error.data.file,"error");
-				}else{
-					sweetAlert("Error", error.data.name+'\n'+error.data.address+'\n'+error.data.age, "error");
-				}
+				sweetAlert("Error", error.data.name+'\n'+error.data.address+'\n'+error.data.age+'\n'+error.data.file, "error");
+				
 			});
 		}
 	}

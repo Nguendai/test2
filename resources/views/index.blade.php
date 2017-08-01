@@ -61,7 +61,7 @@
 						<label for="inputEmail3" class="col-sm-3 control-label">Age</label>
 						<div class="col-sm-9">
 							<input type="number" class="form-control" max="99" id="age" ng-model-options="{allowInvalid: true}" name="age" ng-model="membera.age"  ng-required="true"  placeholder="Please,Enter Age" >
-							<span id="helpBlock2" class="help-block" ng-show="member.age.$error.required && member.name.$touched && member.name.$dirty "  >Please,Enter Age</span>
+							<span id="helpBlock2" class="help-block" ng-show="member.age.$error.required && member.age.$touched && member.age.$dirty "  >Please,Enter Age</span>
 							<span id="helpBlock2" class="help-block" ng-show="member.age.$error.max ">Max Age</span>
 						</div>
 					</div>
@@ -69,7 +69,7 @@
 						<label for="inputEmail3" class="col-sm-3 control-label">Address</label>
 						<div class="col-sm-9">
 							<input type="text" class="form-control" id="address" ng-model-options="{allowInvalid: true}" ng-model="membera.address" ng-maxlength="300"  required name="address" placeholder="Please,Enter Address" />
-							<span id="helpBlock2" class="help-block" ng-show="member.address.$error.required && member.name.$touched && member.name.$dirty ">Please,Enter Address</span>
+							<span id="helpBlock2" class="help-block" ng-show="member.address.$error.required && member.address.$touched && member.address.$dirty ">Please,Enter Address</span>
 							<span id="helpBlock2" class="help-block" ng-show="member.address.$error.maxlength ">Address must be less than 300 char</span>
 						</div>
 					</div>
@@ -85,7 +85,7 @@
 			  </div>
 			  <div class="modal-footer">
 				<button type="button" class="btn btn-primary"
-				 ng-click="save(state,membera.id)">Save</button>
+				 ng-disabled="member.$invalid"	ng-click="save(state,membera.id)">Save</button>
 			  </div>
 			</div><!-- /.modal-content -->
 		  </div><!-- /.modal-dialog -->

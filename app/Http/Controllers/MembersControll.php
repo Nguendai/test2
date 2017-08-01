@@ -21,9 +21,6 @@ class MembersControll extends Controller
         'address'=>'required|max:300',
         'file' =>'nullable|mimes:png,gif,jpg,jpeg|max:10000',
       ]);
-      // $this->validate($req,[
-      //   'file' =>'nullable|mimes:png,gif,jpg,jpeg|max:10000',
-      // ]);
       $path = 'upload/images';
       $fileName = time()."-".$file->getClientOriginalName();
       $file->move($path , $fileName); 
@@ -55,15 +52,19 @@ class MembersControll extends Controller
   }
   public function postEdit(Request $req, $id){
     $member=Members::find($id);
+    //   $this->validate($req,[
+    //   'name' =>'required|max:100',
+    //   'age'=>'required|digits_between:1,2|numeric',
+    //   'address'=>'required|max:300',
+    //   'file' =>'nullable|mimes:png,gif,jpg,jpeg|max:10000'
+    // ]);
+    if($req->file('file')){
+       $file=$req->file;
       $this->validate($req,[
       'name' =>'required|max:100',
       'age'=>'required|digits_between:1,2|numeric',
       'address'=>'required|max:300',
-    ]);
-    if($req->file('file')){
-       $file=$req->file;
-      $this->validate($req,[
-        'file' =>'required|mimes:png,gif,jpg,jpeg|max:10000',
+      'file' =>'nullable|mimes:png,gif,jpg,jpeg|max:10000'
       ]);
        $path = 'upload/images';
        $fileName = time()."-".$file->getClientOriginalName();
@@ -75,6 +76,11 @@ class MembersControll extends Controller
        $member->images=$file;
        $member->save();
      }else{
+      $this->validate($req,[
+      'name' =>'required|max:100',
+      'age'=>'required|digits_between:1,2|numeric',
+      'address'=>'required|max:300',
+      ]);
        $member->name=$req->name;
        $member->age=$req->age;
        $member->address=$req->address;

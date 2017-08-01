@@ -3,7 +3,7 @@ var app=angular.module('test-app2',[]);
 app.controller('MembersControll',function($scope,$http){
 	$http({
 		method:'GET',
-		url:'http://localhost/test2/public/list',
+		url:'http://52.14.242.205/list',
 	}).then(function(reponse){
 		$scope.members=reponse.data;
 	},function(error){
@@ -30,7 +30,7 @@ app.controller('MembersControll',function($scope,$http){
 				$scope.member.$setPristine(true);
 				$http({
 					method:'GET',
-					url:'http://localhost/test2/public/edit/'+id,
+					url:'http://52.14.242.205/edit/'+id,
 				}).then(function(reponse){
 					$scope.membera=reponse.data;
 				},function(error){
@@ -57,7 +57,7 @@ app.controller('MembersControll',function($scope,$http){
 				$http({
 					method:'POST',
 					data:data,
-					url:'http://localhost/test2/public/add',
+					url:'http://52.14.242.205/add',
 					headers :{'Content-Type':undefined}
 				}).then(function(reponse){
 					console.log(reponse.data)
@@ -83,7 +83,7 @@ app.controller('MembersControll',function($scope,$http){
 			$http({
 				method:'POST',
 				data:data,
-				url:'http://localhost/test2/public/edit/'+id,
+				url:'http://52.14.242.205/edit/'+id,
 				headers :{'Content-Type':undefined}
 			}).then(function(reponse){
 				$('#myModal').modal('hide');
@@ -103,7 +103,7 @@ app.controller('MembersControll',function($scope,$http){
 		if(comfirm){
 			$http({
 					method:'GET',
-					url:'http://localhost/test2/public/delete/'+id,
+					url:'http://52.14.242.205/delete/'+id,
 				}).then(function (reponse){
 					$scope.members = reponse.data;
 					sweetAlert("Congratulation", "You just kicked some asshole out of the squad", "success");
